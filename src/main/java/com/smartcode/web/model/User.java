@@ -1,6 +1,7 @@
 package com.smartcode.web.model;
 
 import lombok.*;
+import org.hibernate.annotations.Fetch;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -36,8 +37,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Comment> list;
-
 
 }

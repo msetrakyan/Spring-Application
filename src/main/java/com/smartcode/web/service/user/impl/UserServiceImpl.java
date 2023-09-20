@@ -1,30 +1,32 @@
-package com.smartcode.web.service;
+package com.smartcode.web.service.user.impl;
 
 import com.smartcode.web.exception.ResourceNotFoundException;
 import com.smartcode.web.exception.WrongPasswordException;
 import com.smartcode.web.model.User;
 import com.smartcode.web.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
+import com.smartcode.web.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 
 @Component
 @Transactional
-public class UserService {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public void register(User user) {
         userRepository.save(user);
     }
 
+    @Transactional
     public void login(String username, String password) {
 
         User user = userRepository.findByUsername(username);
@@ -38,6 +40,7 @@ public class UserService {
 
     }
 
+    @Transactional
    public boolean changePassword(User user, String oldPass, String newPass) {
 
         if(!oldPass.equals(user.getPassword())) {
