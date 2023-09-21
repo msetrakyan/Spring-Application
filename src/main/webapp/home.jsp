@@ -27,9 +27,9 @@
 <h1>Welcome dear <%=request.getSession().getAttribute("username")%> </h1>
 
 
-<form action="/users/comment" method="get">
-    <input type="submit" value="comments">
-</form>
+<button onclick="window.location.pathname='comment.jsp';">
+    Comment Section
+</button>
 
 
 

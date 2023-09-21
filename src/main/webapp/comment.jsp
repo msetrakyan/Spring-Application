@@ -53,7 +53,7 @@
         <%=list.get(i).getDescription()%>
     </td>
     <td>
-        <form action="/users/comment" method="post"/>
+        <form action="/comments/commentDelete" method="post"/>
             <input type="hidden" name="title" value="<%=list.get(i).getTitle()%>" />
             <input type="submit" value="delete">
         </form>
@@ -74,7 +74,7 @@
 </table>
 
 
-<form action="/users/commentUtil" method="post"/>
+<form action="/comments/commentCreate" method="post"/>
 <input type="text" name="title"><br>
 <input type="text" name="description"><br>
 <input type="submit" name="create">

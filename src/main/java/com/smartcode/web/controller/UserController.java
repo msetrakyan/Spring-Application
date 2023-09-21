@@ -86,39 +86,9 @@ public class UserController {
     }
 
 
-    @RequestMapping(path = "/comment", method = RequestMethod.GET)
-    public String comment() {
-        return "comment";
-    }
 
 
-    @RequestMapping(path = "/comment", method = RequestMethod.POST)
-    public ModelAndView commentDelete(@RequestParam String title,
-                                HttpSession session) {
 
-        String username = (String)session.getAttribute("username");
-
-        UserEntity userEntity = userService.findByUsername(username);
-
-        commentService.delete(userEntity, title);
-
-        return new ModelAndView("comment");
-    }
-
-
-    @RequestMapping(path = "/commentUtil", method = RequestMethod.POST)
-    public ModelAndView commentCreate(@RequestParam String title,
-                                      @RequestParam String description,
-                                      HttpSession session) {
-
-        String username = (String)session.getAttribute("username");
-
-        UserEntity userEntity = userService.findByUsername(username);
-
-        commentService.create(userEntity, title, description);
-
-        return new ModelAndView("comment");
-    }
 
 
 
