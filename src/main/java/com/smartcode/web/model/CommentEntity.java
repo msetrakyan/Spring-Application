@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
-public class Comment {
+public class CommentEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,10 +26,7 @@ public class Comment {
     private String description;
 
     @ManyToOne
-    private User user;
-
-
-
+    private UserEntity user;
 
 
 

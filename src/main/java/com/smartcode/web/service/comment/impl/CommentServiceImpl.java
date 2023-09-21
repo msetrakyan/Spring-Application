@@ -1,21 +1,21 @@
 package com.smartcode.web.service.comment.impl;
 
-import com.smartcode.web.model.Comment;
-import com.smartcode.web.model.User;
+import com.smartcode.web.model.CommentEntity;
+import com.smartcode.web.model.UserEntity;
 import com.smartcode.web.repository.CommentRepository;
 import com.smartcode.web.service.comment.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.xml.stream.events.Comment;
 import java.util.List;
 
 
-@Component
+@Service
 public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
-
     @Autowired
     public CommentServiceImpl(CommentRepository commentRepository) {
         this.commentRepository = commentRepository;
@@ -23,22 +23,28 @@ public class CommentServiceImpl implements CommentService {
 
 
     @Transactional
-    public Comment get(User user, String title) {
-        return null;
+    public CommentEntity get(UserEntity user, String title) {
+        CommentEntity commentEntity = commentRepository.findByTitleAndUser(title, user);
+        return commentEntity;
     }
 
     @Override
-    public Comment create(User user, String title, String description) {
-        return null;
+    public CommentEntity create(UserEntity user, String title, String description) {
+        CommentEntity commentEntity = new CommentEntity(null, title, description, user);
+        commentRepository.save(commentEntity);
+        return commentEntity;
     }
 
     @Override
-    public boolean delete(User user, String title) {
-        return false;
+    public boolean delete(UserEntity user, String title) {
+        CommentEntity commentEntity = commentRepository.findByTitleAndUser(title, user);
+        commentRepository.delete(commentEntity);
+        return true;
     }
 
     @Override
-    public List<Comment> getAll(User user) {
-        return null;
+    public List<CommentEntity> getAll(UserEntity user) {
+        List<CommentEntity> list = commentRepository.findAllByUser(user);
+        return list;
     }
 }

@@ -1,15 +1,21 @@
 package com.smartcode.web.service.user;
 
-import com.smartcode.web.model.User;
+import com.smartcode.web.model.UserEntity;
 
 public interface UserService {
 
 
-    void register(User user);
+    void register(UserEntity user);
 
     void login(String username, String password);
 
-    boolean changePassword(User user, String oldPass, String newPass);
+    boolean changePassword(UserEntity user, String oldPass, String newPass);
+
+    UserEntity findByUsername(String username);
+
+
+
+
 
 
 

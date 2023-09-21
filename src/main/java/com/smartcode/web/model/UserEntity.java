@@ -1,7 +1,6 @@
 package com.smartcode.web.model;
 
 import lombok.*;
-import org.hibernate.annotations.Fetch;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -15,7 +14,15 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @ToString
-public class User {
+public class UserEntity {
+
+    public UserEntity(String name, String lastname, Integer age, String username, String password) {
+        this.name = name;
+        this.lastname = lastname;
+        this.age = age;
+        this.username = username;
+        this.password = password;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +45,7 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Comment> list;
+    private List<CommentEntity> list;
+
 
 }

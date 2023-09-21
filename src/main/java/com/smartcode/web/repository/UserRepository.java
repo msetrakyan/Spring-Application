@@ -1,17 +1,17 @@
 package com.smartcode.web.repository;
 
-import com.smartcode.web.model.User;
+import com.smartcode.web.model.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 
-@Component
+@Repository
 @Transactional
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
 
-     User findByUsername(String username);
+     UserEntity findByUsername(String username);
 
 
 

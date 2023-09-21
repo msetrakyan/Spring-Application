@@ -1,5 +1,25 @@
-<html>
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome page</title>
+</head>
 <body>
-<h2>Hello World!</h2>
+
+<h1>Welcome to our Website</h1>
+
+
+
+<button onclick="window.location.href='register.jsp';">
+    Register
+</button>
+
+<button onclick="window.location.href='login.jsp';">
+    Login
+</button>
+
+
+
+
 </body>
 </html>

@@ -2,15 +2,15 @@ package com.smartcode.web.service.user.impl;
 
 import com.smartcode.web.exception.ResourceNotFoundException;
 import com.smartcode.web.exception.WrongPasswordException;
-import com.smartcode.web.model.User;
+import com.smartcode.web.model.UserEntity;
 import com.smartcode.web.repository.UserRepository;
 import com.smartcode.web.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
-@Component
+@Service
 @Transactional
 public class UserServiceImpl implements UserService {
 
@@ -22,14 +22,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public void register(User user) {
+    public void register(UserEntity user) {
         userRepository.save(user);
     }
 
     @Transactional
     public void login(String username, String password) {
 
-        User user = userRepository.findByUsername(username);
+        UserEntity user = userRepository.findByUsername(username);
 
         if(user == null) {
             throw new ResourceNotFoundException("Username doesn't exist");
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-   public boolean changePassword(User user, String oldPass, String newPass) {
+   public boolean changePassword(UserEntity user, String oldPass, String newPass) {
 
         if(!oldPass.equals(user.getPassword())) {
             return false;
@@ -54,15 +54,10 @@ public class UserServiceImpl implements UserService {
 
 
 
-
-
-
-
-
-
-
-
-
+    public UserEntity findByUsername(String username) {
+        UserEntity userEntity = userRepository.findByUsername(username);
+        return userEntity;
+    }
 
 
 

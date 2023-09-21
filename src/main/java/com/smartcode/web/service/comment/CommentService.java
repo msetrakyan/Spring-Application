@@ -1,18 +1,18 @@
 package com.smartcode.web.service.comment;
 
-import com.smartcode.web.model.Comment;
-import com.smartcode.web.model.User;
+import com.smartcode.web.model.CommentEntity;
+import com.smartcode.web.model.UserEntity;
 
 import java.util.List;
 
 public interface CommentService {
 
-    Comment get(User user, String title);
+    CommentEntity get(UserEntity user, String title);
 
-    Comment create(User user, String title, String description);
+    CommentEntity create(UserEntity user, String title, String description);
 
-    boolean delete(User user, String title);
+    boolean delete(UserEntity user, String title);
 
-    List<Comment> getAll(User user);
+    List<CommentEntity> getAll(UserEntity user);
 
 }

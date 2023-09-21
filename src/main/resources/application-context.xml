@@ -7,6 +7,8 @@
        default-init-method="init"
 >
 
+    <import resource="dispatcher-servlet.xml"/>
+
     <context:component-scan base-package="com.smartcode.web"/>
     <jpa:repositories base-package="com.smartcode.web.repository"/>
     <tx:annotation-driven transaction-manager="transactionManager"/>
