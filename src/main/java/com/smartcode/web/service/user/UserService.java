@@ -4,7 +4,6 @@ import com.smartcode.web.model.UserEntity;
 
 public interface UserService {
 
-
     void register(UserEntity user);
 
     void login(String username, String password);
@@ -13,11 +12,9 @@ public interface UserService {
 
     UserEntity findByUsername(String username);
 
+    UserEntity findByEmail(String email);
 
-
-
-
-
+    void updateUser(UserEntity userEntity);
 
 
 

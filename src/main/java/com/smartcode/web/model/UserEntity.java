@@ -16,12 +16,13 @@ import java.util.List;
 @ToString
 public class UserEntity {
 
-    public UserEntity(String name, String lastname, Integer age, String username, String password) {
+    public UserEntity(String name, String lastname, Integer age, String username, String password, String email) {
         this.name = name;
         this.lastname = lastname;
         this.age = age;
         this.username = username;
         this.password = password;
+        this.email = email;
     }
 
     @Id
@@ -46,6 +47,16 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<CommentEntity> list;
+
+    @Column(nullable = false)
+    private Boolean isVerified;
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
+
+    @Column(nullable = false)
+    private String code;
 
 
 }

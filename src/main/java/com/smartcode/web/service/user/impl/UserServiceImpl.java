@@ -1,13 +1,18 @@
 package com.smartcode.web.service.user.impl;
 
 import com.smartcode.web.exception.ResourceNotFoundException;
+import com.smartcode.web.exception.VerificationException;
 import com.smartcode.web.exception.WrongPasswordException;
 import com.smartcode.web.model.UserEntity;
 import com.smartcode.web.repository.UserRepository;
+import com.smartcode.web.service.mail.MailService;
 import com.smartcode.web.service.user.UserService;
+import com.smartcode.web.utils.RandomGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Random;
 
 
 @Service
@@ -15,10 +20,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final MailService mailService;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, MailService mailService) {
         this.userRepository = userRepository;
+        this.mailService = mailService;
     }
 
     @Transactional
@@ -37,6 +44,9 @@ public class UserServiceImpl implements UserService {
         if(!user.getPassword().equals(password)) {
             throw new WrongPasswordException("You've entered the wrong password");
         }
+        if(!user.getIsVerified()) {
+            throw new VerificationException("Account not verified!");
+        }
 
     }
 
@@ -54,10 +64,23 @@ public class UserServiceImpl implements UserService {
 
 
 
+    @Transactional(readOnly = true)
     public UserEntity findByUsername(String username) {
         UserEntity userEntity = userRepository.findByUsername(username);
         return userEntity;
     }
+
+    @Transactional(readOnly = true)
+    public UserEntity findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Transactional
+    public void updateUser(UserEntity userEntity) {
+        userRepository.save(userEntity);
+    }
+
+
 
 
 
