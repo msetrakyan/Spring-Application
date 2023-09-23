@@ -20,10 +20,14 @@
 
         Username: <input type="text" name="username"><br>
         Password: <input type="password" name="password"><br>
-
+        RememberMe: <input type="checkbox" name="rememberMe">
 
         <input type="submit" value="login">
     </form>
+
+    <button onclick="window.location.pathname='index.jsp';">
+        Return
+    </button>
 
 
 

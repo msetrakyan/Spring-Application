@@ -17,7 +17,6 @@
 </form>
 
 
-
 <%
     if(request.getSession().getAttribute("username") == null) {
         response.sendRedirect("login.jsp");

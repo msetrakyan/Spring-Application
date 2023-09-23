@@ -4,7 +4,6 @@ package com.smartcode.web.controller;
 import com.smartcode.web.exception.ResourceNotFoundException;
 import com.smartcode.web.exception.VerificationException;
 import com.smartcode.web.exception.WrongPasswordException;
-import com.smartcode.web.model.CommentEntity;
 import com.smartcode.web.model.UserEntity;
 import com.smartcode.web.service.comment.CommentService;
 import com.smartcode.web.service.mail.MailService;
@@ -12,10 +11,11 @@ import com.smartcode.web.service.user.UserService;
 import com.smartcode.web.utils.RandomGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
@@ -35,9 +35,27 @@ public class UserController {
         this.mailService = mailService;
     }
 
+    @GetMapping(path = "/")
+    public ModelAndView start(@CookieValue(name = "rememberMe", required = false) Cookie cookie,
+                              HttpSession session,
+                              HttpServletResponse response) {
+        if(cookie != null) {
+            String cookieValue = cookie.getValue();
+            String username = cookieValue.split(":")[0];
+            String password = cookieValue.split(":")[1];
+
+            return login(username, password, "on", response, session);
+        } else {
+            return new ModelAndView("index");
+        }
+
+    }
+
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public ModelAndView login(@RequestParam String username,
                               @RequestParam String password,
+                              @RequestParam(required = false) String rememberMe,
+                              HttpServletResponse response,
                               HttpSession session) {
 
         ModelAndView modelAndView = new ModelAndView();
@@ -49,7 +67,14 @@ public class UserController {
 
             modelAndView.setViewName("home");
 
+            Cookie cookie = new Cookie("rememberMe", username + ":" + password);
+
+            cookie.setMaxAge(360000);
+
+            response.addCookie(cookie);
+
             return modelAndView;
+
         } catch (VerificationException exception) {
             modelAndView.addObject("message", exception.getMessage());
             modelAndView.setViewName("index");
@@ -99,9 +124,9 @@ public class UserController {
     }
 
     @RequestMapping(path = "/logout", method = RequestMethod.GET)
-    public String logout(HttpSession session) {
+    public ModelAndView logout(HttpSession session) {
         session.invalidate();
-        return "index";
+        return new ModelAndView("login");
     }
 
 
