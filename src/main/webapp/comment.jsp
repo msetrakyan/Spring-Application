@@ -23,6 +23,10 @@
 </head>
 <body>
 
+<button onclick="window.location.pathname='home.jsp';">
+    Return
+</button>
+
 <table>
 
     <tr>
