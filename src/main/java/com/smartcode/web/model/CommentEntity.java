@@ -2,9 +2,11 @@ package com.smartcode.web.model;
 
 
 import lombok.*;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
+@Component
 @Entity
 @Table(name = "comments")
 @AllArgsConstructor

@@ -8,6 +8,7 @@ import com.smartcode.web.repository.UserRepository;
 import com.smartcode.web.service.mail.MailService;
 import com.smartcode.web.service.user.UserService;
 import com.smartcode.web.utils.RandomGenerator;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,16 +18,13 @@ import java.util.Random;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+
 
     private final UserRepository userRepository;
     private final MailService mailService;
 
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository, MailService mailService) {
-        this.userRepository = userRepository;
-        this.mailService = mailService;
-    }
 
     @Transactional
     public void register(UserEntity user) {
@@ -47,18 +45,14 @@ public class UserServiceImpl implements UserService {
         if(!user.getIsVerified()) {
             throw new VerificationException("Account not verified!");
         }
-
     }
 
     @Transactional
    public boolean changePassword(UserEntity user, String oldPass, String newPass) {
-
         if(!oldPass.equals(user.getPassword())) {
             return false;
         }
-
         user.setPassword(newPass);
-
         return true;
     }
 
